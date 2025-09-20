@@ -7,3 +7,4 @@ For a basic use you need to provide the following info and run the following scr
 2. Set your favorite crypto ticker in list_tickers.py
 3. run bot_master_run.py, the default time frame is 5m for historical data. It gets the buy and sell signals and then submit the buy and sell orders.
 4. As a second layer of profit protection, set the stop loss and take profit values in trading_main_sdk_profit_checker.py and run it. it checks all of the open positions.
+5. Copy all folders avaiable in main or create folders with the same name in your scripts directory.
