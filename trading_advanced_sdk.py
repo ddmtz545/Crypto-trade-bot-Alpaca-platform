@@ -236,6 +236,26 @@ def calculate_maker_prices(symbol: str) -> dict | None:
         print(f"An error occurred in calculate_maker_prices for {symbol}: {e}")
         return None
 
+# # --- Main execution block to test the function ---
+# if __name__ == "__main__":
+#
+#     # Check if API keys are set
+#     if not API_KEY or not API_SECRET:
+#         print("Error: Please set your ALPACA_API_KEY and ALPACA_API_SECRET environment variables.")
+#     else:
+#         # Define the crypto symbol to test
+#         crypto_symbol = "BTC/USD"
+#
+#         # Calculate the maker prices
+#         maker_prices = calculate_maker_prices(crypto_symbol)
+#
+#         # Print the results
+#         if maker_prices:
+#             print("\n--- Calculated Maker Prices ---")
+#             print(f"To place a maker BUY order, set limit price to: {maker_prices['buy_limit_price']}")
+#             print(f"To place a maker SELL order, set limit price to: {maker_prices['sell_limit_price']}")
+#             print("-----------------------------")
+
 
 #-------------------------------------------------------------------------------
 #------------------------------Order submission---------------------------------
@@ -720,6 +740,7 @@ def check_and_take_profit(profit_threshold_percentage: float, crypto_data_client
                 if unrealized_plpc > profit_threshold_decimal:
                     print(f"    - PROFIT TARGET MET for {position.symbol}! "
                           f"({unrealized_pl_percent:.2f}% > {profit_threshold_percentage}%)")
+                    cancel_all_pending_orders()##cancel orders first,this should be modified to position.symbol
                     print(f"    - Closing position for {position.symbol} to take profit.")
                     close_position_by_symbol(position.symbol)
                     closed_positions.append(position.symbol)
@@ -801,6 +822,9 @@ def check_and_stop_loss(loss_threshold_percentage: float, crypto_data_client: Cr
                     print(f"    - LOSS TARGET MET for {position.symbol}! "
                           f"({unrealized_pl_percent:.2f}% < {loss_threshold_percentage}%)")
                     print(f"    - Closing position for {position.symbol} to stop loss.")
+                    
+                    cancel_all_pending_orders()##cancel orders first,this should be modified to position.symbol
+
                     close_position_by_symbol(position.symbol)
                     closed_positions.append(position.symbol)
                 else:
